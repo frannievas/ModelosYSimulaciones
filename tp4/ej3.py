@@ -12,7 +12,8 @@ def udiscrete(m, k):
     Uniform discrete variable in interval [m, k]
     """
     u = random()
-    return int(u*(k-m+1))+m
+
+    return int(u * (k - m + 1)) + m
 
 
 def experiment():

@@ -4,6 +4,7 @@ from math import exp
 N = 10000
 ITER = 100
 
+
 def udiscrete(m, k):
     """
     Uniform discrete variable in interval [m, k]
@@ -13,12 +14,12 @@ def udiscrete(m, k):
 
 
 def experiment():
-    s = [ exp(udiscrete(0,N) / N) for x in range(ITER)]
-    return (sum(s) / ITER ) * N
+    s = [exp(udiscrete(0, N) / N) for x in range(ITER)]
+    return (sum(s) / ITER) * N
 
 
 def real_value():
-    s = [ exp(x/N) for x in range(1, N+1)]
+    s = [exp(x/N) for x in range(1, N+1)]
     return sum(s)
 
 
