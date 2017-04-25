@@ -16,16 +16,15 @@ def Poisson(l):
     u = random()
     if u >= f:
         # generar X haciendo búsqueda ascendente
-        p = f
         while u >= f:
-            p *= l * i
             i += 1
-            f += p
+            f *= l / i
+        i -= 1
     else:
         # generar X haciendo búsqueda descendente.
-        p = f
-        while u >= f:
-            p *= (l / i)
-            i += 1
-            f += p
+        while u < f:
+            i -= 1
+            f *= (l / i)
+        i += 1
+
     return i
