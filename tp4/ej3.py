@@ -36,4 +36,12 @@ def experiment():
 if __name__ == '__main__':
     for n in N:
         results = [experiment() for x in range(n)]
-        print("Mean: {}".format(sum(results) / n))
+        mean = sum(results) / n
+
+        results = [experiment() ** 2 for x in range(n)]
+        mean2 = sum(results) / n
+
+        print("N={}".format(n))
+        print("Mean: {}".format(mean))
+        print("Mean2: {}".format(mean2))
+        print("Variance: {}".format(mean2 - (mean ** 2)))
