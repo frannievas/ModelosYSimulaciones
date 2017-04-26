@@ -1,5 +1,5 @@
 from random import random
-
+from math import sqrt
 N1 = 100
 N2 = 1000
 N3 = 10000
@@ -44,4 +44,4 @@ if __name__ == '__main__':
         print("N={}".format(n))
         print("Mean: {}".format(mean))
         print("Mean2: {}".format(mean2))
-        print("Variance: {}".format(mean2 - (mean ** 2)))
+        print("Standard deviation: {}".format(sqrt(mean2 - (mean ** 2))))
