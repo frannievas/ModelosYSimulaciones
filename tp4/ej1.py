@@ -17,6 +17,8 @@ def permutation(x):
     """
     Random permutation
     """
+    N = len(x)
+
     for i in range(N-1, 0, -1):
         # Uniform in [0,i]
         index = udiscrete(0, i)
