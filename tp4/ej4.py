@@ -28,3 +28,18 @@ def Poisson(l):
         i += 1
 
     return i
+
+def experiment(l, k):
+    """
+    Desarrollar dos métodos para generar una variable aleatoria X.
+    """
+    u = random()
+    i = 0
+    f = Poisson(l) / sum([Poisson(l) for i in range(k)])
+    while u > f:
+        i += 1
+        f *= l / i
+    if f == 0:
+        return 0
+   else:
+        return i
