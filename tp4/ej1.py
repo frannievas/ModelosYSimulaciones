@@ -41,12 +41,12 @@ def experiment():
 
 if __name__ == '__main__':
 
-    # Estimate the mean of the succes experiments
+    # Estimate the mean of the success experiments
     success = [experiment() for x in range(ITER)]
     mean = sum(success) / ITER
     print("Mean: {}".format(mean))
 
-    # Estimate the mean of the succes experiments
+    # Estimate the mean of the success experiments
     success = [experiment() ** 2 for x in range(ITER)]
     mean2 = sum(success) / ITER
     print("Mean2: {}".format(mean2))
