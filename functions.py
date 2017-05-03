@@ -83,7 +83,7 @@ def bernoulli_naive(p):
     return random() < p
 
 
-def binomial_naive(n, p):
+def binomial(n, p):
     """
     Binomial distribution with parameters n, p
     """
@@ -97,3 +97,79 @@ def binomial_naive(n, p):
         F += prob
         i += 1
     return i
+
+
+def composition(alpha, distributions):
+    """
+    Composition method
+    :param alpha: List with all the alphas
+    :param distributions: List with all the distributions
+    """
+    assert sum(alpha) == 1
+    assert len(distributions) == len(alphas)
+
+    alpha_distributions = list(zip(alpha, distributions))
+    alpha_distributions.sort(reverse=True)
+    u = random()
+    prob = 0
+
+    for a, d in alpha_distributions:
+        prob += a
+        if u <= prob:
+            return d
+
+
+def alias(n, var):
+    """
+    Alias method
+    :param n: size of the alias
+    :param var: list of lists
+    e.g
+    var[0] = [ (0.1, 3), (0.9, 2)]
+    0.1 and 0.9 are the probabilities
+    3 and 2 are the return values
+    """
+    i = int(random() * n) # pos
+    v = random()
+
+    x = var[i]
+
+    if x[0][0] < v:
+        return x[0][1]
+    else:
+        return x[1][1]
+
+"""
+ejemplo del teorico
+"""
+# n = 3
+# x1 = [(5/8, 1), (3/8, 3)]
+# x2 = [(9/16, 4), (7/16, 2)]
+# x3 = [(11/16, 1), (4/16, 2)]
+# var = [x1, x2, x3]
+# alias(n, var)
+
+
+def urna(k, p, r):
+    """
+    Urn method
+    :param k: int. k * Pi must be integer for all Pi
+    :param p: List with all the Pi probs
+    :param r: List with all the return values
+    """
+    A = []
+    p = p.sort()
+
+    # Create the array
+    for i, elem in enumerate(r):
+        A += [elem for x in range(int(p[i]*k))]
+
+    i = int(random()*k) + 1
+
+"""
+ejemplo de urna
+# """
+# k = 10
+# p = [0.2, 0.8]
+# r = [1, 2]
+# urna(k, p, r)
