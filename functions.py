@@ -173,3 +173,38 @@ ejemplo de urna
 # p = [0.2, 0.8]
 # r = [1, 2]
 # urna(k, p, r)
+
+def exponential(l):
+    return - (1/l) * log2(random())
+
+
+def dosExponenciales(l):
+    t = -1 / l * log2( random() * random())
+    u = random()
+    x = t * u
+    y = t - x
+    return (x, y)
+
+
+def PoissonHomogenea(l, T):
+    I = 0
+    S = [0]
+    t = 0
+
+    # while True:
+    #     u = random()
+    #     if (t - (1/l) log2()) > T:
+    #         break
+    #     else:
+    #         t = t - (1/l)
+    #         I = I + 1
+    #         S.append(t)
+
+    exp = exponential(l)
+    while t + exp <= T:
+        t += exp
+        I += 1
+        S.append(t)
+        exp = exponential(l)
+
+    return I, S
