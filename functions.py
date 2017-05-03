@@ -1,3 +1,7 @@
+from random import random
+from math import exp, log2
+
+
 def udiscrete(m, k):
     """
     Uniform discrete variable in interval [m, k]
@@ -19,6 +23,7 @@ def permutation(x):
         x[index] = x[i]
         x[i] = tmp
     return x
+
 
 def Poisson_acum(l, i):
     prob = exp(-l)
@@ -53,7 +58,7 @@ def Poisson(l):
 
 def Poisson_naive(l, k):
     """
-    Desarrollar dos métodos para generar una variable aleatoria X.
+    Metodo naive
     """
     u = random()
     i = 0
@@ -64,4 +69,31 @@ def Poisson_naive(l, k):
         p *= l / i
         f += p
 
+    return i
+
+
+def geometric(p):
+    """
+    Geometric Distribution
+    """
+    return(int(log2(1 - random()) / log2(1 - p)) + 1)
+
+
+def bernoulli_naive(p):
+    return random() < p
+
+
+def binomial_naive(n, p):
+    """
+    Binomial distribution with parameters n, p
+    """
+    u = random()
+    i = 0
+    c = p / (1 - p)  # Constant
+    f = prob = (1 - p) ** n  # P0
+
+    while U >= F:
+        prob *= c * (n - i) / (i + 1)
+        F += prob
+        i += 1
     return i
