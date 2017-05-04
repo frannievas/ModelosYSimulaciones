@@ -1,5 +1,5 @@
 from random import random
-from math import exp, log2
+from math import exp, log2, pi, sqrt, cos, sin
 
 
 def udiscrete(m, k):
@@ -225,6 +225,31 @@ def normal_estandart():
         Y2 = -log2(random())
         if Y2 >= (Y1 - 1) ** 2:
             return Y1
+
+
+def polar_naive():
+    """
+    Polar method. Generates 2 normal variables
+    """
+    Rcuadrado = -2 * log2(random())
+    Theta = 2 * pi * random()
+    X = sqrt(Rcuadrado) * cos(Theta)
+    Y = sqrt(Rcuadrado) * sin(Theta)
+    return (X, Y)
+
+
+def polar():
+    # Generar un punto aleatorio en el circulo unitario
+    while True:
+        V1, V2 = random(), random()
+        if V1 ** 2 + V2 ** 2 <= 1:
+            break
+    S = V1 ** 2 + V2 ** 2
+    const = sqrt(-2 * log2(S)/S)
+    X = V1 * const
+    Y = V2 * const
+
+    return (X, Y)
 
 
 def PoissonHomogenea(l, T):
