@@ -208,3 +208,25 @@ def PoissonHomogenea(l, T):
         exp = exponential(l)
 
     return I, S
+
+
+def PoissonNoHomogenea(lamdaT, lamda, T):
+    """
+    :param l: lambda function
+    """
+    I = 0
+    S = [0]
+    t = 0
+
+    while True:
+        exp = exponential(t)
+        if  t + exp > T:
+            break
+        else:
+            t = t + exp
+        v = random()
+        if v < (lamdaT(t) / lamda):
+            I += 1
+            S.append(t)
+
+    return I, S
