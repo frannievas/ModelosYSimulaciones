@@ -252,26 +252,31 @@ def polar():
     return (X, Y)
 
 
-def PoissonHomogenea(l, T):
+def PoissonHomogenea_naive(lamda, T):
+    I = 0
+    S = [0]
+    t = 0
+    while True:
+        u = random()
+        if t - (1/lamda) * log2(u) > T:
+            break
+        else:
+            t = t - (1/lamda)
+            I = I + 1
+            S.append(t)
+
+
+def PoissonHomogenea(lamda, T):
     I = 0
     S = [0]
     t = 0
 
-    # while True:
-    #     u = random()
-    #     if (t - (1/l) log2()) > T:
-    #         break
-    #     else:
-    #         t = t - (1/l)
-    #         I = I + 1
-    #         S.append(t)
-
-    exp = exponential(l)
+    exp = exponential(lamda)
     while t + exp <= T:
         t += exp
         I += 1
         S.append(t)
-        exp = exponential(l)
+        exp = exponential(lamda)
 
     return I, S
 
