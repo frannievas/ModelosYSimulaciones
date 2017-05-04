@@ -87,10 +87,10 @@ def binomial(n, p):
     """
     Binomial distribution with parameters n, p
     """
-    u = random()
+    U = random()
     i = 0
     c = p / (1 - p)  # Constant
-    f = prob = (1 - p) ** n  # P0
+    F = prob = (1 - p) ** n  # P0
 
     while U >= F:
         prob *= c * (n - i) / (i + 1)
@@ -99,16 +99,16 @@ def binomial(n, p):
     return i
 
 
-def composition(alpha, distributions):
+def composition(alphas, distributions):
     """
     Composition method
-    :param alpha: List with all the alphas
+    :param alphas: List with all the alphas
     :param distributions: List with all the distributions
     """
-    assert sum(alpha) == 1
+    assert sum(alphas) == 1
     assert len(distributions) == len(alphas)
 
-    alpha_distributions = list(zip(alpha, distributions))
+    alpha_distributions = list(zip(alphas, distributions))
     alpha_distributions.sort(reverse=True)
     u = random()
     prob = 0
@@ -129,7 +129,7 @@ def alias(n, var):
     0.1 and 0.9 are the probabilities
     3 and 2 are the return values
     """
-    i = int(random() * n) # pos
+    i = int(random() * n)  # pos
     v = random()
 
     x = var[i]
@@ -139,15 +139,15 @@ def alias(n, var):
     else:
         return x[1][1]
 
-"""
-ejemplo del teorico
-"""
-# n = 3
-# x1 = [(5/8, 1), (3/8, 3)]
-# x2 = [(9/16, 4), (7/16, 2)]
-# x3 = [(11/16, 1), (4/16, 2)]
-# var = [x1, x2, x3]
-# alias(n, var)
+    """
+    ejemplo del teorico
+    """
+    # n = 3
+    # x1 = [(5/8, 1), (3/8, 3)]
+    # x2 = [(9/16, 4), (7/16, 2)]
+    # x3 = [(11/16, 1), (4/16, 2)]
+    # var = [x1, x2, x3]
+    # alias(n, var)
 
 
 def urna(k, p, r):
@@ -166,24 +166,65 @@ def urna(k, p, r):
 
     i = int(random()*k) + 1
 
-"""
-ejemplo de urna
-# """
-# k = 10
-# p = [0.2, 0.8]
-# r = [1, 2]
-# urna(k, p, r)
+    """
+    ejemplo de urna
+    # """
+    # k = 10
+    # p = [0.2, 0.8]
+    # r = [1, 2]
+    # urna(k, p, r)
 
-def exponential(l):
-    return - (1/l) * log2(random())
+
+def gamma(n, lamda):
+    """
+    Gamma distribution with parameters n, lambda
+    """
+    u = 1
+    for _ in range(n):
+        u *= random()
+    return - log2(u) / lamda
+
+
+def exponential(lamda):
+    """
+    Exponential distribution with lambda parameter
+    """
+    return - (1/lamda) * log2(random())
 
 
 def dosExponenciales(l):
-    t = -1 / l * log2( random() * random())
+    t = -1 / l * log2(random() * random())
     u = random()
     x = t * u
     y = t - x
     return (x, y)
+
+
+def raizN(n):
+    """
+    Simulate a v.a x ** n
+    """
+    return max([random() for x in range(n+1)])
+
+
+def normal(mu, sigma):
+    while True:
+        Y1 = -log2(random())
+        Y2 = -log2(random())
+        if Y2 >= (Y1 - 1) ** 2:
+            break
+    if random() < 0.5:
+        return Y1 * sigma + mu
+    else:
+        return -Y1 * sigma + mu
+
+
+def normal_estandart():
+    while True:
+        Y1 = -log2(random())
+        Y2 = -log2(random())
+        if Y2 >= (Y1 - 1) ** 2:
+            return Y1
 
 
 def PoissonHomogenea(l, T):
@@ -220,7 +261,7 @@ def PoissonNoHomogenea(lamdaT, lamda, T):
 
     while True:
         exp = exponential(t)
-        if  t + exp > T:
+        if t + exp > T:
             break
         else:
             t = t + exp
