@@ -10,7 +10,7 @@ def exponential(lamda):
 
 
 def h(x):
-    return (x * exp(-(x / 2)) * exp(1)) / 2
+    return (x * exp(-(x / 2)) * exp(1)) * 2
 
 
 def acceptRejection():
