@@ -25,12 +25,20 @@ def permutation(x):
     return x
 
 
-def Poisson_acum(l, i):
+def Poisson_pi(l, i):
+    """
+    Calcula Pi
+    """
     prob = exp(-l)
     for j in range(0, i):
         prob *= (l / (j + 1))
     return prob
 
+def Poission_acum(l, k):
+    """
+    Calcula acumulada F(k) = P0 + P1 + ... + Pk
+    """
+    return sum([Poisson_pi(l, i) for i in range(k+1)])
 
 def Poisson(l):
     i = int(l)
@@ -44,19 +52,19 @@ def Poisson(l):
             i += 1
             p *= l / i
             f += p
-        i -= 1
+
     else:
         # generar X haciendo búsqueda descendente.
         while u < f:
-            i -= 1
             p *= i / l
-            f += p
+            i -= 1
+            f -= p
         i += 1
 
     return i
 
 
-def Poisson_naive(l, k):
+def Poisson_naive(l):
     """
     Metodo naive
     """
@@ -183,6 +191,21 @@ def gamma(n, lamda):
     for _ in range(n):
         u *= random()
     return - log2(u) / lamda
+
+
+def Nexponenciales(n, lamda):
+    """
+    Genera N variables aleatorias, mediante la funcion gamma, de manera óptima.
+    """
+    Vi, array = [], []
+    t = gamma(N, lamda)
+    Vi = sort([random() for _ in range(N)])
+    array.append(t * Vi[0])  # Agrego el primer valor
+
+    for i in range(1, N - 1):
+        array.append(t * (Vi[i] - Vi[i - 1]))
+    array.append(t * Vi[N - 1])  # Agrego el último valor
+    return(array)
 
 
 def exponential(lamda):
