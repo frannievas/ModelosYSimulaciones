@@ -11,11 +11,13 @@ def Poisson_pi(l, i):
         prob *= (l / (j + 1))
     return prob
 
+
 def Poisson_acum(l, k):
     """
     Calcula acumulada F(k) = P0 + P1 + ... + Pk
     """
     return sum([Poisson_pi(l, i) for i in range(k+1)])
+
 
 def Poisson(l):
     i = int(l)
@@ -73,10 +75,11 @@ def experiment_naive(l, k):
 
     return i
 
+
 def rejection(l):
     denom = Poisson_acum(l, k)
     u, Y = random(), random()
-    while u >= Poisson_acum(l,Y) / denom:
+    while u >= Poisson_pi(l, Y) / denom:
         u, Y = random(), random()
 
     return Y
@@ -84,7 +87,7 @@ def rejection(l):
 
 def experiment(l, k):
     i = int(l)
-    denom = sum([ Poisson_acum(l,x) for x in range(k+1)])
+    denom = sum([Poisson_acum(l, x) for x in range(k+1)])
     # Calcular F(I) usando la definición recursiva de p_i
     p = Poisson_acum(l, i) / denom
     u = random()
@@ -105,6 +108,7 @@ def experiment(l, k):
         i += 1
 
     return i
+
 
 if __name__ == '__main__':
     l = 20
