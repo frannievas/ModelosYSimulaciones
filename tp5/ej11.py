@@ -10,15 +10,19 @@ def udiscrete(m, k):
     return int(u*(k-m+1))+m
 
 
-def Nexponenciales(n, lamda):
-    t = gamma(n, lamda)
-    U = [random() for x in range(n+1)]
-    U.sort()
-    V = [t * U[0]]
-    for i in range(1, n-1):
-        V.append(t * (V[i] - V[i - 1]))
-    V.append(t * V[n - 1])  # Agrego el último valor
-    return(V)
+def Nexponenciales(N, lamda):
+    """
+    Genera N variables aleatorias, mediante la funcion gamma, de manera óptima.
+    """
+    Vi, array = [], []
+    t = gamma(N, lamda)
+    Vi = [random() for _ in range(N)]
+    Vi.sort()
+    intervals = ([t * Vi[0]] +
+                 [t * (Vi[i] - Vi[i - 1]) for i in range(1, N-1)] +
+                 [t - t * Vi[N - 1]])
+
+    return intervals
 
 
 def gamma(n, lamda):
@@ -55,7 +59,7 @@ def Poisson_naive(lamda):
 
 def experiment(lamda):
     return sum([udiscrete(20, 40) for x in range(Poisson_naive(lamda))])
-    
+
 
 if __name__ == '__main__':
     lamda = 5
