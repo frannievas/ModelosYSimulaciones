@@ -34,11 +34,13 @@ def Poisson_pi(l, i):
         prob *= (l / (j + 1))
     return prob
 
-def Poission_acum(l, k):
+
+def Poisson_acum(l, k):
     """
     Calcula acumulada F(k) = P0 + P1 + ... + Pk
     """
     return sum([Poisson_pi(l, i) for i in range(k+1)])
+
 
 def Poisson(l):
     i = int(l)
@@ -193,19 +195,19 @@ def gamma(n, lamda):
     return - log2(u) / lamda
 
 
-def Nexponenciales(n, lamda):
+def Nexponenciales(N, lamda):
     """
     Genera N variables aleatorias, mediante la funcion gamma, de manera óptima.
     """
     Vi, array = [], []
     t = gamma(N, lamda)
-    Vi = sort([random() for _ in range(N)])
-    array.append(t * Vi[0])  # Agrego el primer valor
+    Vi = [random() for _ in range(N)]
+    Vi.sort()
+    intervals = ([t * Vi[0]] +
+                 [t * (Vi[i] - Vi[i - 1]) for i in range(1, N-1)] +
+                 [t - t * Vi[N - 1]])
 
-    for i in range(1, N - 1):
-        array.append(t * (Vi[i] - Vi[i - 1]))
-    array.append(t * Vi[N - 1])  # Agrego el último valor
-    return(array)
+    return intervals
 
 
 def exponential(lamda):

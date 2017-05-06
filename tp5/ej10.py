@@ -20,13 +20,11 @@ def Nexponenciales(N, lamda):
     t = gamma(N, lamda)
     Vi = [random() for _ in range(N)]
     Vi.sort()
-    array.append(t * Vi[0])  # Agrego el primer valor
+    intervals = ([t * Vi[0]] +
+                 [t * (Vi[i] - Vi[i - 1]) for i in range(1, N-1)] +
+                 [t - t * Vi[N - 1]])
 
-    for i in range(1, N - 1):
-        array.append(t * (Vi[i] - Vi[i - 1]))
-    array.append(t * Vi[N - 1])  # Agrego el último valor
-    return(array)
-
+    return intervals
 
 
 def eventosPoisson(T):
