@@ -1,7 +1,6 @@
 from random import random
 from math import exp
 
-
 def Poisson_pi(l, i):
     """
     Calcula Pi
@@ -43,9 +42,9 @@ def Poisson(l):
     return i
 
 
-def Poisson_naive(l, k):
+def Poisson_naive(l):
     """
-    Desarrollar dos métodos para generar una variable aleatoria X.
+    Metodo naive
     """
     u = random()
     i = 0
@@ -70,19 +69,17 @@ def experiment_naive(l, k):
     f = p
     while u >= f:
         i += 1
-        p *= l / i
+        p *= (l / i) / denom
         f += p
 
     return i
 
 
-def rejection(l):
-    denom = Poisson_acum(l, k)
-    u, Y = random(), random()
-    while u >= Poisson_pi(l, Y) / denom:
-        u, Y = random(), random()
-
-    return Y
+def rejection(l, k):
+    y = Poisson_naive(l)
+    while y > k:
+        y = Poisson_naive(l)
+    return y
 
 
 def experiment(l, k):
@@ -111,6 +108,6 @@ def experiment(l, k):
 
 
 if __name__ == '__main__':
-    l = 20
-    k = 10
-    print(Poisson(l))
+    l = 3
+    k = 100
+    print(rejection(l, k))
