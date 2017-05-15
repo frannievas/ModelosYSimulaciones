@@ -14,7 +14,7 @@ def udiscrete(m, k):
 
 
 def experiment():
-    s = [exp(udiscrete(0, N) / N) for x in range(ITER)]
+    s = [exp(udiscrete(1, N) / N) for x in range(ITER)]
     return (sum(s) / ITER) * N
 
 
