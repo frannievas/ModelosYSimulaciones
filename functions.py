@@ -1,6 +1,17 @@
 from random import random
 from math import exp, log2, pi, sqrt, cos, sin
 
+def discrete(xi, pi):
+    """
+    Genera un va Discreta, a partir de la lista de los valores xi y de sus
+    respectivas probabilidades pi.
+    """
+    U, i, F = random(), 0, pi[0]
+
+    while U >= F:
+        i += 1
+        F += pi[i]
+    return(xi[i])
 
 def udiscrete(m, k):
     """
@@ -8,6 +19,35 @@ def udiscrete(m, k):
     """
     u = random()
     return int(u*(k-m+1))+m
+
+
+def combinatorial(r, A):
+    """
+    Devuelve un subconjunto aleatorio de r elementos de un conjunto A, de
+    cardinalidad N.
+    """
+    N = len(A)
+    assert(r < N)
+
+    if r < N / 2:
+        for i in range(N - 1, r, -1):
+            index = uniform(0, i)
+            tmp = A[i]
+            A[i], A[index] = A[index], tmp
+        return(A[N - r:])
+    else:
+        for i in range(N - 1, N - r, -1):
+            index = uniform(0, i)
+            tmp = A[i]
+            A[i], A[index] = A[index], tmp
+        return(A[:r])
+
+
+def geometric(p):
+    """
+    Geometric Distribution
+    """
+    return int(log2(random()) / log2(1 - p)) + 1
 
 
 def permutation(x):
@@ -23,6 +63,10 @@ def permutation(x):
         x[index] = x[i]
         x[i] = tmp
     return x
+
+
+def bernoulli_naive(p):
+    return int(random() < p)
 
 
 def Poisson_pi(l, i):
@@ -80,17 +124,6 @@ def Poisson_naive(l):
         f += p
 
     return i
-
-
-def geometric(p):
-    """
-    Geometric Distribution
-    """
-    return(int(log2(1 - random()) / log2(1 - p)) + 1)
-
-
-def bernoulli_naive(p):
-    return random() < p
 
 
 def binomial(n, p):
@@ -168,13 +201,14 @@ def urna(k, p, r):
     :param r: List with all the return values
     """
     A = []
-    p = p.sort()
+    p.sort()
 
     # Create the array
     for i, elem in enumerate(r):
         A += [elem for x in range(int(p[i]*k))]
 
-    i = int(random()*k) + 1
+    i = int(random()*len(A)) + 1
+    return A[i]
 
     """
     ejemplo de urna
@@ -266,7 +300,7 @@ def polar_naive():
 def polar():
     # Generar un punto aleatorio en el circulo unitario
     while True:
-        V1, V2 = random(), random()
+        V1, V2 = 2 * random() - 1, 2 * random() - 1
         if V1 ** 2 + V2 ** 2 <= 1:
             break
     S = V1 ** 2 + V2 ** 2
