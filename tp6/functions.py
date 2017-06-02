@@ -1,5 +1,40 @@
 from random import random
-from math import log2
+from math import log2, log, sqrt
+
+
+def interval(X, c, S, n):
+    """
+    Calcula los intervalos de confianza para los parametros recibidos
+
+    :param X: Media muestral
+    :param C: Constanste Zalfa
+    :param S: Varianza muestral
+    :param n: Largo de la muestra
+    """
+    return (X - c * (S/sqrt(n)), X + c * (S/sqrt(n)) )
+
+def exponential(lamda):
+    """
+    Genera una va Exponencial, a partir de su único parámentro lamda,
+    utilizando el método de la transformada inversa.
+    """
+    return(- log(random()) / lamda)
+
+
+def normal(mu, sigma):
+    """
+    Esta función devuelve una va normal, utilizando el método de Aceptación y
+    Rechazo mediante 2 va exponenciales.
+    """
+    Y1, Y2 = exponential(1), exponential(1)
+
+    while Y2 < (Y1 - 1) ** 2 / 2:
+        Y1, Y2 = exponential(1), exponential(1)
+
+    if random() < 0.5:
+        return(Y1 * sigma + mu)
+    else:
+        return(-Y1 * sigma + mu)
 
 
 def normal_estandar():
