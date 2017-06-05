@@ -46,11 +46,6 @@ def normal_estandar():
             return Y1
 
 
-def S_naive(Xi, X):
-    result = [(i - X) ** 2 for i in Xi]
-    return sum(result) / (len(Xi) - 1)
-
-
 def prom_sample(Xi):
     """Calcula el promedio de los Xi"""
     return sum(Xi) / len(Xi)
@@ -65,7 +60,12 @@ def avg_rec(X, n, Xi):
     return X + (Xi[n-1] - X) / (n + 1)
 
 
-def S(Xi):
+def S_naive(Xi, X):
+    result = [(i - X) ** 2 for i in Xi]
+    return sum(result) / (len(Xi) - 1)
+
+
+def var_sample(Xi):
     """
     Calcula la varianza muestral
     """
