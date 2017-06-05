@@ -11,7 +11,7 @@ def interval(X, c, S, n):
     :param S: Varianza muestral
     :param n: Largo de la muestra
     """
-    return (X - c * (S/sqrt(n)), X + c * (S/sqrt(n)) )
+    return (X - c * (S/sqrt(n)), X + c * (S/sqrt(n)))
 
 
 def exponential(lamda):
@@ -60,7 +60,7 @@ def avg_rec(X, n, Xi):
     return X + (Xi[n-1] - X) / (n + 1)
 
 
-def S_naive(Xi, X):
+def var(Xi, X):
     result = [(i - X) ** 2 for i in Xi]
     return sum(result) / (len(Xi) - 1)
 
@@ -76,3 +76,20 @@ def var_sample(Xi):
         S2 = (1 - 1 / (i + 1)) * S2 + (i + 2) * (Xnew - X) ** 2
         X = Xnew
     return S2
+
+
+def empiric(x, values):
+    """
+    Funcion empirica
+    :param x: valor en el que se desea evaluar la funcion
+    :param values: valores que toma la funcion empirica
+    """
+    n = len(values)
+    if x < values[0]:
+        return 0
+
+    for i in range(len(values) - 1):
+        if (x >= values[i]) and (x < values[i+1]):
+            return (i+1) / n
+
+    return 1
