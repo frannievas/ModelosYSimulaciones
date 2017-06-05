@@ -1,4 +1,4 @@
-from functions import S, prom, interval
+from functions import avg_rec, interval
 from random import random
 from math import sqrt
 
@@ -18,14 +18,13 @@ def M():
 
 
 def experiment():
-    D = 0.01 ** 2
     S2 = 0
     X = 0
     Xn = []
 
     for n in range(1000):
         Xn.append(M())
-        Xnew = prom(X, n+1, Xn)
+        Xnew = avg_rec(X, n+1, Xn)
         S2 = (1 - 1 / (n + 1)) * S2 + (n + 2) * (Xnew - X) ** 2
         X = Xnew
         n += 1
@@ -39,4 +38,4 @@ if __name__ == "__main__":
     cons = 1.96
     S = sqrt(S2)
     a, b = interval(X, cons, S, n)
-    print("Intervalo: [{}, {}]".format(a,b))
+    print("Intervalo: [{}, {}]".format(a, b))

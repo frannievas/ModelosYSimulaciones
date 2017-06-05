@@ -1,6 +1,4 @@
-from random import random
-from math import log2
-from functions import normal, S, prom
+from functions import normal, avg_rec
 
 
 def experiment():
@@ -11,8 +9,8 @@ def experiment():
     X = 0
 
     while S2 / (n+1) > D or n < 100:
-        Xn.append(normal(0,1))
-        Xnew = prom(X, n+1, Xn)
+        Xn.append(normal(0, 1))
+        Xnew = avg_rec(X, n+1, Xn)
         S2 = (1 - 1 / (n + 1)) * S2 + (n + 2) * (Xnew - X) ** 2
         X = Xnew
         n += 1

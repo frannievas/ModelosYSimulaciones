@@ -13,6 +13,7 @@ def interval(X, c, S, n):
     """
     return (X - c * (S/sqrt(n)), X + c * (S/sqrt(n)) )
 
+
 def exponential(lamda):
     """
     Genera una va Exponencial, a partir de su único parámentro lamda,
@@ -50,12 +51,12 @@ def S_naive(Xi, X):
     return sum(result) / (len(Xi) - 1)
 
 
-def prom(Xi):
+def prom_sample(Xi):
     """Calcula el promedio de los Xi"""
     return sum(Xi) / len(Xi)
 
 
-def prom(X, n, Xi):
+def avg_rec(X, n, Xi):
     """
     :param X: Promedio con n-1 valores
     :param n:
@@ -71,7 +72,7 @@ def S(Xi):
     S2 = 0
     X = Xi[0]
     for i in range(len(Xi)):
-        Xnew = prom(X, i+1, Xi)
+        Xnew = avg_rec(X, i+1, Xi)
         S2 = (1 - 1 / (i + 1)) * S2 + (i + 2) * (Xnew - X) ** 2
         X = Xnew
     return S2

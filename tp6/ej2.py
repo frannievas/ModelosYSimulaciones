@@ -1,6 +1,6 @@
 from math import exp
 from random import random
-from functions import S, prom
+from functions import avg_rec
 
 
 def experiment():
@@ -12,7 +12,7 @@ def experiment():
 
     while S2 / (i+1) > D or i < 100:
         Xi.append(exp(random() ** 2))
-        Xnew = prom(X, i+1, Xi)
+        Xnew = avg_rec(X, i+1, Xi)
         S2 = (1 - 1 / (i + 1)) * S2 + (i + 2) * (Xnew - X) ** 2
         X = Xnew
         i += 1
