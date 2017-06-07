@@ -29,10 +29,24 @@ def experiment():
 
 
 if __name__ == "__main__":
+    """
+    Estimar π sorteando puntos uniformemente distribuíos en el cuadrado cuyos
+    vértices son:
+    (1, 1), (−1, 1), (−1, −1), (1, −1), y contabilizando la fracción que cae
+    dentro del círculo inscripto de radio 1.
+    Obtener un intervalo de ancho menor que 0.1, el cual contenga a π con el
+    95% de confianza.
+    ¿Cuántas ejecuciones son necesarias?
+    """
     S2, X, n = experiment()
-    print("Iter: {}".format(n))
-    print("Varianza: {}".format(S2 * 4))
-    print("Media: {}".format(X * 4))
+    print("Estimacion de π: {}".format(X * 4))
+    print("Cantidad de iteraciones: {}\n".format(n))
+
+    # Dato extra
+    print("Varianza: {}\n".format(S2 * 4))
+
+    # Intervalo de confianza
+    # X(barra) = 1.96 * (S / sqrt(N))
     cons = 1.96
     S = sqrt(S2)
     a, b = interval(X, cons, S, n)

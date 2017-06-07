@@ -2,6 +2,14 @@ from random import random
 from math import log2, log, sqrt
 
 
+def udiscrete(m, k):
+    """
+    Uniform discrete variable in interval [m, k]
+    """
+    u = random()
+    return int(u*(k-m+1))+m
+
+
 def interval(X, c, S, n):
     """
     Calcula los intervalos de confianza para los parametros recibidos
@@ -46,7 +54,7 @@ def normal_estandar():
             return Y1
 
 
-def prom_sample(Xi):
+def avg_sample(Xi):
     """Calcula el promedio de los Xi"""
     return sum(Xi) / len(Xi)
 
@@ -60,12 +68,13 @@ def avg_rec(X, n, Xi):
     return X + (Xi[n-1] - X) / (n + 1)
 
 
-def var(Xi, X):
+def var_sample(Xi):
+    X = avg_sample(Xi)
     result = [(i - X) ** 2 for i in Xi]
     return sum(result) / (len(Xi) - 1)
 
 
-def var_sample(Xi):
+def var_sample_rec(Xi):
     """
     Calcula la varianza muestral
     """
@@ -93,3 +102,30 @@ def empiric(x, values):
             return (i+1) / n
 
     return 1
+
+
+def bootstrap(sample, N):
+    """
+    :variable: mean: Estimación por boostrap de la media.
+    :variable: var: Estimación por boostrap de la varianza.
+    """
+    empirical_mean = avg_sample(sample)
+    empirical_var = var_sample(sample)
+    n, mean, var = len(sample), 0, 0
+
+    for _ in range(N):
+        sum_xi, values = 0, []
+        for _ in range(n):
+            index = udiscrete(0, n - 1)
+            sum_xi += sample[index]
+            values.append(sample[index])
+        mean_tmp = sum_xi / n
+
+        var_tmp = 0
+        for value in values:
+            var_tmp += (value - mean_tmp) ** 2
+        var_tmp /= (n - 1)
+
+        mean += (mean_tmp - empirical_mean) ** 2
+        var += (var_tmp - empirical_var) ** 2
+    return(mean / N, var / N)

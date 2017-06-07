@@ -20,6 +20,12 @@ def experiment():
 
 
 if __name__ == "__main__":
+    """
+    Estimar mediante el método de Monte Carlo la integral:
+    Integral[0][1] e(x**2) dX
+    Generar al menos 100 valores y detenerse cuando la desviación estándar
+    del estimador sea menor que 0.01.
+    """
     X, n = experiment()
     print("Numero de corridas:{}".format(n))
     print("Estimacion: {}".format(X))
