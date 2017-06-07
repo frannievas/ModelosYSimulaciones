@@ -1,5 +1,87 @@
 from random import random
-from math import log2, log, sqrt
+from math import log2, log, sqrt, exp
+
+
+def gamma(n, lamda):
+    """
+    Gamma distribution with parameters n, lambda
+    """
+    u = 1
+    for _ in range(n):
+        u *= random()
+    return - log2(u) / lamda
+
+
+def Nexponenciales(N, lamda):
+    """
+    Genera N variables aleatorias, mediante la funcion gamma, de manera óptima.
+    """
+    Vi = []
+    t = gamma(N, lamda)
+    Vi = [random() for _ in range(N)]
+    Vi.sort()
+    intervals = ([t * Vi[0]] +
+                 [t * (Vi[i] - Vi[i - 1]) for i in range(1, N-1)] +
+                 [t - t * Vi[N - 1]])
+
+    return intervals
+
+
+def Poisson_pi(l, i):
+    """
+    Calcula Pi
+    """
+    prob = exp(-l)
+    for j in range(0, i):
+        prob *= (l / (j + 1))
+    return prob
+
+
+def Poisson_acum(l, k):
+    """
+    Calcula acumulada F(k) = P0 + P1 + ... + Pk
+    """
+    return sum([Poisson_pi(l, i) for i in range(k+1)])
+
+
+def Poisson(l):
+    i = int(l)
+    # Calcular F(I) usando la definición recursiva de p_i
+    p = Poisson_acum(l, i)
+    f = p
+    u = random()
+    if u >= f:
+        # generar X haciendo búsqueda ascendente
+        while u >= f:
+            i += 1
+            p *= l / i
+            f += p
+
+    else:
+        # generar X haciendo búsqueda descendente.
+        while u < f:
+            p *= i / l
+            i -= 1
+            f -= p
+        i += 1
+
+    return i
+
+
+def Poisson_naive(l):
+    """
+    Metodo naive
+    """
+    u = random()
+    i = 0
+    p = exp(-l)
+    f = p
+    while u >= f:
+        i += 1
+        p *= l / i
+        f += p
+
+    return i
 
 
 def udiscrete(m, k):
