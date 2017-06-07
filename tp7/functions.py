@@ -1,6 +1,15 @@
 from random import random
 from math import log2, log, sqrt
 
+def estadistic(Pi, Ni, n):
+    """
+    Pi: Probabilidades
+    Ni: frecuencia absoluta
+    """
+    T = sum([((Ni[i] - Pi[i] * n ) ** 2) / (n * Pi[i]) for i in range(len(Pi))])
+
+    return T
+
 def udiscrete(m, k):
     """
     Uniform discrete variable in interval [m, k]
