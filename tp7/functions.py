@@ -1,7 +1,34 @@
 from random import random
 from math import log2, log, sqrt
 
-def estadistic(Pi, Ni, n):
+def rejection(p_value, alpha):
+    if p_value < alpha:
+        print("Se rechaza la hipotesis")
+    else:
+        print("No se rechaza la hipotesis")
+
+def simulation(n, ITER, T, k, Pi, fun):
+    """
+    :param n: Tamaño de las muestras
+    :param ITER: Cantidad de iteraciones
+    :param t: T = t, calculado con la muestra original
+    :param k: Cantidad de valores que toma la variable aleatoria
+    :param Pi: Probabilidades
+    :param fun: Funcion de probabilidad de la v.a
+    """
+    success = 0
+
+    for _ in range(ITER):
+        distribution = [fun() for _ in range(n)]
+        Ni = [distribution.count(i + 1) for i in range(k)]
+
+        if stadistic(Pi, Ni, n) >= T:
+            success += 1
+
+    return success / ITER
+
+
+def stadistic(Pi, Ni, n):
     """
     Pi: Probabilidades
     Ni: frecuencia absoluta
