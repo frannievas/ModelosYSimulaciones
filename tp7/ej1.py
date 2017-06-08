@@ -38,7 +38,7 @@ if __name__ == '__main__':
     # Tomar chi_cuadrado con k-1 grados de libertad
     p_value = chdtrc(k-1, T)
     print("P-Valor ji-cuadrada: {}".format(p_value))
-    alpha = 0.95
+    alpha = 0.05
     rejection(p_value, alpha)
 
     # b)
