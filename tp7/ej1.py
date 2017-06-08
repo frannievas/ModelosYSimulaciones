@@ -17,8 +17,8 @@ if __name__ == '__main__':
     """
     Enunciado: De acuerdo con la teoría genética de Mendel, cierta planta de
     guisantes debe producir flores blancas, rosas o rojas con probabilidad
-    1/4, 1/2 y 1/4, respectivamente. Para verificar experimentalmente la teoría,
-    se estudió una muestra de 564 guisantes, donde se encontró que 141
+    1/4, 1/2 y 1/4, respectivamente. Para verificar experimentalmente la
+    teoría, se estudió una muestra de 564 guisantes, donde se encontró que 141
     produjeron flores blancas, 291 flores rosas y 132 flores rojas.
     Aproximar el p−valor de esta muestra:
 
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     """
 
     # a)
-    probs = [ 1/4, 1/2, 1/4]
+    probs = [1/4, 1/2, 1/4]
     frecuency = [141, 291, 132]
     n = sum(frecuency)
     T = stadistic(probs, frecuency, n)

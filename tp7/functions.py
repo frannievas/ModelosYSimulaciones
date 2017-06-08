@@ -1,11 +1,13 @@
 from random import random
 from math import log2, log, sqrt
 
+
 def rejection(p_value, alpha):
     if p_value < alpha:
         print("Se rechaza la hipotesis")
     else:
         print("No se rechaza la hipotesis")
+
 
 def simulation(n, ITER, T, k, Pi, fun):
     """
@@ -33,9 +35,10 @@ def stadistic(Pi, Ni, n):
     Pi: Probabilidades
     Ni: frecuencia absoluta
     """
-    T = sum([((Ni[i] - Pi[i] * n ) ** 2) / (n * Pi[i]) for i in range(len(Pi))])
+    T = sum([((Ni[i] - Pi[i] * n) ** 2) / (n * Pi[i]) for i in range(len(Pi))])
 
     return T
+
 
 def udiscrete(m, k):
     """
