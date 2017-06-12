@@ -2,11 +2,47 @@ from random import random
 from math import log2, log, sqrt
 
 
-def rejection(p_value, alpha):
-    if p_value < alpha:
-        print("Se rechaza la hipotesis")
-    else:
-        print("No se rechaza la hipotesis")
+# def ks(values):
+#     n = len(values)
+#     randoms = [random() for _ in range(n)]
+#     D1 = max([(i+1/n) - randoms[i] for i in range(n)])
+#     D2 = max([randoms[i] - (i/n) for i in range(n)])
+#     return max(D1, D2)
+
+
+def sim_ks(n, Iter, d):
+    success = 0
+
+    for _ in range(Iter):
+        randoms = [random() for _ in range(n)]
+        randoms.sort()
+
+        D_values = []
+        for j in range(n):
+            # j / n - F(Y(j))
+            D_values.append((j + 1) / n - randoms[j])
+            # F(Y(j)) - (j - 1) / n
+            D_values.append(randoms[j] - j / n)
+
+        # D1 = max([(i+1/n) - randoms[i] for i in range(n)])
+        # D2 = max([randoms[i] - (i/n) for i in range(n)])
+        # # Di = [(i+1/n) - randoms[i] for i in range(n)] + [randoms[i] - (i/n) for i in range(n)]
+        # Di = max(D1, D2)
+        Di = max(D_values)
+        if Di >= d:
+            success += 1
+
+    return success / Iter
+
+
+def rejection(p_value):
+    alphas = [0.05, 0.01, 0.1]
+    for alpha in alphas:
+        print("Alpha:{}".format(alpha))
+        if p_value < alpha:
+            print("Se rechaza la hipotesis")
+        else:
+            print("No se rechaza la hipotesis")
 
 
 def simulation(n, ITER, T, k, Pi, fun):
@@ -130,6 +166,8 @@ def empiric(x, values):
     :param x: valor en el que se desea evaluar la funcion
     :param values: valores que toma la funcion empirica
     """
+    values.sort()
+
     n = len(values)
     if x < values[0]:
         return 0
