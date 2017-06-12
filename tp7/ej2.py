@@ -5,12 +5,20 @@ from random import random
 
 def F():
     u = random()
-    if u <= 1/4:
+    if u <= 1/6:
         return 1
-    elif u <= (1/4) + (1/2):
+    elif u <= 2/6:
         return 2
-    else:
+    elif u <= 3/6:
         return 3
+    elif u <= 4/6:
+        return 4
+    elif u <= 4/6:
+        return 4
+    elif u <= 5/6:
+        return 5
+    else:
+        return 6
 
 
 if __name__ == '__main__':
@@ -36,8 +44,7 @@ if __name__ == '__main__':
     # Tomar chi_cuadrado con k-1 grados de libertad
     p_value = chdtrc(k-1, T)
     print("P-Valor ji-cuadrada: {}".format(p_value))
-    alpha = 0.05
-    rejection(p_value, alpha)
+    rejection(p_value)
 
     # b)
     print("b)")
@@ -45,4 +52,4 @@ if __name__ == '__main__':
     ITER = 1000
     p_value_simulation = simulation(n, ITER, T, k, probs, F)
     print("P-Valor simulacion: {}".format(p_value_simulation))
-    rejection(p_value_simulation, alpha)
+    rejection(p_value_simulation)

@@ -32,15 +32,14 @@ if __name__ == '__main__':
     n = sum(frecuency)
     T = stadistic(probs, frecuency, n)
     k = 3
-    
+
     print("a)")
     print("==========")
     print("Estadisitico: {}".format(T))
     # Tomar chi_cuadrado con k-1 grados de libertad
     p_value = chdtrc(k-1, T)
     print("P-Valor ji-cuadrada: {}".format(p_value))
-    alpha = 0.05
-    rejection(p_value, alpha)
+    rejection(p_value)
 
     # b)
     print("b)")
@@ -48,4 +47,4 @@ if __name__ == '__main__':
     ITER = 1000
     p_value_simulation = simulation(n, ITER, T, k, probs, F)
     print("P-Valor simulacion: {}".format(p_value_simulation))
-    rejection(p_value_simulation, alpha)
+    rejection(p_value_simulation)
