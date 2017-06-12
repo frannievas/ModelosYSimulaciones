@@ -1,4 +1,4 @@
-from functions import stadistic, rejection, normal, estimate_mu_sigma_normal
+from functions import stadistic, rejection, normal, range_sample
 from scipy.stats import expon
 from scipy.special import ndtr
 from random import random
@@ -29,16 +29,24 @@ def sim_ks(n, ITER, d, mu, sigma):
 
     return success / ITER
 
+
+
 if __name__ == '__main__':
     """
-    Enunciado: Decidir si los siguientes datos corresponden a una distribución
-    Normal:
-    91.9 97.8 111.4 122.3 105.4 95.0 103.8 99.6 96.6 119.3 104.8 101.7.
-    Calcular una aproximación del p-valor.
+    Enunciado: Un experimento diseñado para comparar dos tratamientos contra la
+    corrosión arrojó los siguientes datos (los cuales representan la máxima
+    profundidad de los agujeros en unidades de milésima de pulgada) en pedazos
+    de alambre sujetos a cada uno de los tratamientos por separado:
+
+    Tratamiento 1: 65.2 67.1 69.4 78.4 74.0 80.3
+    Tratamiento 2: 59.4 72.1 68.0 66.2 58.5
     """
 
-    sample = [91.9, 97.8, 111.4, 122.3, 105.4, 95.0, 103.8, 99.6, 96.6, 119.3, 104.8, 101.7]
-    sample.sort()
+    sample_1 = [65.2, 67.1, 69.4, 78.4, 74.0, 80.3]
+    sample_2 = [59.4, 72.1, 68.0, 66.2, 58.5]
+
+    sample_1.sort()
+    sample_2.sort()
 
     n = len(sample)
     Iter = 10000

@@ -3,6 +3,39 @@ from random import random
 from math import log2, log, sqrt, factorial
 
 
+def range_sample(sample1, sample2):
+    all_sample = sample1 + sample2
+    all_sample.sort()
+    # Si la sample2 es la mas chica
+    if len(sample2) <= len(sample1):
+        sample1 = sample2
+    return sum([i+1 for i in range(len(all_sample)) if all_sample[i] in sample1])
+
+def rangos(n,m,r):
+    if n==1 and m==0:
+        if r<=0:
+            return 0
+        else:
+            return 1
+    elif n==0 and m==1:
+        if r<0:
+            return 0
+        else:
+            return 1
+    else:
+        if n==0:
+            return rangos(0,m-1,r)
+        elif m==0:
+            return rangos(n-1,0,r-n)
+        else:
+            return n/(n+m)*rangos(n-1,m,r-n-m)+m/(n+m)*rangos(n,m-1,r)
+
+
+def p_value_range():
+
+
+    return 2 * min()
+
 def binomial_naive(n, p):
     """
     Binomial distribution with parameters n, p

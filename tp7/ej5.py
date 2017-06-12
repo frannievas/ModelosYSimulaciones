@@ -19,6 +19,7 @@ def simulation(n, ITER, T, k, Pi, p):
     for _ in range(ITER):
 
         distribution = [binomial_naive(n, p) for _ in range(n)]
+        distribution.sort()
         Ni = [distribution.count(i) for i in range(k)]
 
         pnew = estimate_p_binomial(distribution, n)
