@@ -18,9 +18,21 @@ def binomial_naive(n, p):
         i += 1
     return i
 
+def estimate_mu_sigma_normal(sample, n):
+    n = len(sample)
+    mu = sum(sample) / n
+    sum_xi = sum([(value - mu) ** 2 for value in sample])
+
+    return(mu, sqrt(sum_xi / n))
+
+
 
 def estimate_p_binomial(sample, n):
     return (sum(sample) / len(sample)) / n
+
+
+def estimate_lamda_exponential(sample, n):
+    return (len(sample) / sum(sample))
 
 
 def nCr(n,r):

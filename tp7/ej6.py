@@ -11,16 +11,17 @@ def expAcum(x, lamda):
 def ks_sample(sample):
     n = len(sample)
     D1 = max([((i+1)/n) - expAcum(sample[i], 1) for i in range(n)])
-    D2 = max([expAcum(sample[i], 1/50) - (i/n) for i in range(n)])
+    D2 = max([expAcum(sample[i], 1) - (i/n) for i in range(n)])
     return max(D1, D2)
 
 
 if __name__ == '__main__':
     """
-    Enunciado: Calcular una aproximación del p−valor de la hipótesis:
-    “Los siguientes 13 valores provienen de una distribución
-    exponencial con media 50”:
-    86, 133, 75, 22, 11, 144, 78, 122, 8, 146, 33, 41, 99.
+    Enunciado: Generar los valores correspondientes a 10 variables aleatorias
+    exponenciales independientes,cada una con media 1. Luego, en base al
+    estadístico de prueba de Kolmogorov-Smirnov, aproxime el p−valor de la
+    prueba de que los datos realmente provienen de una distribución exponencial
+    con media 1.
     """
 
     n = 10
