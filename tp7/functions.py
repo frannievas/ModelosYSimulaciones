@@ -1,14 +1,42 @@
+from collections import Counter
 from random import random
-from math import log2, log, sqrt
+from math import log2, log, sqrt, factorial
 
 
-# def ks(values):
-#     n = len(values)
-#     randoms = [random() for _ in range(n)]
-#     D1 = max([(i+1/n) - randoms[i] for i in range(n)])
-#     D2 = max([randoms[i] - (i/n) for i in range(n)])
-#     return max(D1, D2)
+def binomial_naive(n, p):
+    """
+    Binomial distribution with parameters n, p
+    """
+    U = random()
+    i = 0
+    c = p / (1 - p)  # Constant
+    F = prob = (1 - p) ** n  # P0
 
+    while U >= F:
+        prob *= c * (n - i) / (i + 1)
+        F += prob
+        i += 1
+    return i
+
+
+def estimate_p_binomial(sample, n):
+    return (sum(sample) / len(sample)) / n
+
+
+def nCr(n,r):
+    return factorial(n) / factorial(r) / factorial(n-r)
+
+
+def binomial(n, p):
+    return [binomial_pi(n, p, i) for i in range(n)]
+
+
+def binomial_pi(n, p, i):
+    return nCr(n, i) * (p**i) * ((1 - p) ** (n-i))
+
+
+def Ni(sample):
+    return list(Counter(sample).values())
 
 def sim_ks(n, Iter, d):
     success = 0
