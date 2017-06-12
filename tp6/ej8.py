@@ -17,7 +17,7 @@ def simulation():
     atention_time = exponential(4.2)
     time += time_new_customer
 
-    while time != 8:
+    while time < 8:
 
         # Tiempo en que llega el nuevo cliente
         time_new_customer = exponential(4)
@@ -30,7 +30,7 @@ def simulation():
             atention_time = atention_time_new_customer
 
         tmp_time = time_new_customer
-        while tmp_time >= 0:
+        while tmp_time > 0:
 
             if len(customers) == 0:
                 break
@@ -47,9 +47,8 @@ def simulation():
                 atention_time -= tmp_time
                 tmp_time = 0
 
-
         # Si hay 3 o menos clientes
-        if customers <= 3:
+        if len(customers) <= 3:
             customers_attended += 1
             customers.append(atention_time_new_customer)
 
@@ -69,3 +68,5 @@ if __name__ == '__main__':
     Aplicar el método “bootstrap” para estudiar el error cuadrático medio de su
     estimador.
     """
+    e = simulation()
+    print(e)
