@@ -29,12 +29,12 @@ if __name__ == '__main__':
 
     Iter = 10000
 
-    d_1 = ks_sample(values)
+    d = ks_sample(values)
 
-    print("Estadisitico: {}".format(d_1))
+    print("Estadisitico: {}".format(d))
     n = len(values)
 
-    p_value_1 = sim_ks(n, Iter, d_1)
+    p_value = sim_ks(n, Iter, d)
 
-    print("P_Value_1: {}".format(p_value_1))
-    rejection(p_value_1)
+    print("P_Value: {}".format(p_value))
+    rejection(p_value)
