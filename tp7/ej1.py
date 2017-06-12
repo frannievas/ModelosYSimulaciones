@@ -31,10 +31,11 @@ if __name__ == '__main__':
     frecuency = [141, 291, 132]
     n = sum(frecuency)
     T = stadistic(probs, frecuency, n)
+    k = 3
+    
     print("a)")
     print("==========")
     print("Estadisitico: {}".format(T))
-    k = 3
     # Tomar chi_cuadrado con k-1 grados de libertad
     p_value = chdtrc(k-1, T)
     print("P-Valor ji-cuadrada: {}".format(p_value))
