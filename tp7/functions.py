@@ -1,40 +1,102 @@
 from collections import Counter
 from random import random
 from math import log2, log, sqrt, factorial
+from scipy.special import ndtr
 
 
-def range_sample(sample1, sample2):
-    all_sample = sample1 + sample2
-    all_sample.sort()
-    # Si la sample2 es la mas chica
-    if len(sample2) <= len(sample1):
-        sample1 = sample2
-    return sum([i+1 for i in range(len(all_sample)) if all_sample[i] in sample1])
+def range_simulation(sample_1, sample_2, r, N):
+    # sample_1 es la mas chica siempre, cambio de nombre si es necesario.
+    if len(sample_2) <= len(sample_1):
+        tmp = sample_1
+        sample_1 = sample_2
+        sample_2 = tmp
 
-def rangos(n,m,r):
-    if n==1 and m==0:
-        if r<=0:
+    all_sample = sample_1 + sample_2
+    success_min = 0
+    success_max = 0
+
+    for _ in range(N):
+        per = permutation(all_sample)
+        R = range_sample(sample_1, sample_2, per)
+
+        if R >= r:
+            success_max += 1
+        else:
+            success_min += 1
+
+    return 2 * min(success_min / N, success_max / N)
+
+def range_normal(n, m, r):
+    num = r - n * (n + m + 1) / 2
+    den = sqrt(n * m * (n + m + 1) / 12)
+    R = num / den
+    if r <= n * ((n + m + 1) / 2):
+        return 2 * ndtr(R)
+    else:
+        return 2 * (1 - ndtr(R))
+
+
+def range_sample(sample_1, sample_2, all_sample=None):
+    if all_sample is None:
+        all_sample = sample_1 + sample_2
+        all_sample.sort()
+    # Si la sample_2 es la mas chica
+    if len(sample_2) <= len(sample_1):
+        tmp = sample_1
+        sample_1 = sample_2
+        sample_2 = tmp
+
+    # Si hay repeticiones
+    repetition = [(i, count) for i, count in Counter(all_sample).items() if count > 1]
+
+    if len(repetition) > 0:
+        val_rep_s1 = [i for i, c in repetition if i in sample_1 and i in sample_2]
+        R = 0
+        import ipdb; ipdb.set_trace()
+
+        # Sumo todos los que se repiten
+        for i in val_rep_s1:
+            index = [j+1 for j in range(len(all_sample)) if all_sample[j] in val_rep_s1]
+            R += sum(index) / len(index)
+        # Sumo todos los que no se repiten
+        R += sum([k+1 for k in range(len(all_sample)) if all_sample[k] in sample_1 and all_sample[k] not in val_rep_s1])
+        return R
+    return sum([i+1 for i in range(len(all_sample)) if all_sample[i] in sample_1])
+
+def rangos(n, m, r):
+    if n == 1 and m == 0:
+        if r <= 0:
             return 0
         else:
             return 1
-    elif n==0 and m==1:
-        if r<0:
+    elif n == 0 and m == 1:
+        if r < 0:
             return 0
         else:
             return 1
     else:
-        if n==0:
-            return rangos(0,m-1,r)
-        elif m==0:
-            return rangos(n-1,0,r-n)
+        if n == 0:
+            return rangos(0, m-1, r)
+        elif m == 0:
+            return rangos(n-1, 0, r-n)
         else:
-            return n/(n+m)*rangos(n-1,m,r-n-m)+m/(n+m)*rangos(n,m-1,r)
+            return n / (n+m) *rangos(n-1,m,r-n-m)+m/(n+m)*rangos(n,m-1,r)
 
 
-def p_value_range():
+def permutation(x):
+    """
+    Random permutation
+    """
+    N = len(x)
 
+    for i in range(N-1, 0, -1):
+        # Uniform in [0,i]
+        index = udiscrete(0, i)
+        tmp = x[index]
+        x[index] = x[i]
+        x[i] = tmp
+    return x
 
-    return 2 * min()
 
 def binomial_naive(n, p):
     """
@@ -73,7 +135,7 @@ def nCr(n,r):
 
 
 def binomial(n, p):
-    return [binomial_pi(n, p, i) for i in range(n)]
+    return [binomial_pi(n, p, i) for i in range(n + 1)]
 
 
 def binomial_pi(n, p, i):
