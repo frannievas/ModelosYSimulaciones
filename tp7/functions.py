@@ -41,7 +41,7 @@ def range_sample(sample_1, sample_2, all_sample=None):
         all_sample = sample_1 + sample_2
         all_sample.sort()
     # Si la sample_2 es la mas chica
-    if len(sample_2) <= len(sample_1):
+    if len(sample_2) < len(sample_1):
         tmp = sample_1
         sample_1 = sample_2
         sample_2 = tmp
@@ -52,7 +52,6 @@ def range_sample(sample_1, sample_2, all_sample=None):
     if len(repetition) > 0:
         val_rep_s1 = [i for i, c in repetition if i in sample_1 and i in sample_2]
         R = 0
-        import ipdb; ipdb.set_trace()
 
         # Sumo todos los que se repiten
         for i in val_rep_s1:
