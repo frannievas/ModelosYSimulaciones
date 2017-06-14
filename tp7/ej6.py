@@ -1,6 +1,4 @@
-from functions import stadistic, rejection, simulation, sim_ks, exponential
-from scipy.stats import expon
-from random import random
+from functions import rejection, sim_ks, exponential
 from math import exp
 
 

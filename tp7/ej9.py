@@ -1,34 +1,4 @@
-from functions import stadistic, rejection, normal, range_sample, rangos, range_normal, range_simulation
-from scipy.stats import expon
-from scipy.special import ndtr
-from random import random
-from math import exp
-
-
-def ks_sample(sample, mu, sigma):
-    n = len(sample)
-    D1 = max([((i+1)/n) - ndtr((sample[i] - mu) / sigma) for i in range(n)])
-    D2 = max([ndtr((sample[i] - mu) / sigma) - (i/n) for i in range(n)])
-    return max(D1, D2)
-
-
-def sim_ks(n, ITER, d, mu, sigma):
-    """
-    """
-    success = 0
-
-    for _ in range(ITER):
-        distribution = [normal(mu, sigma) for _ in range(n)]
-        distribution.sort()
-        mu_new, sigma_new = estimate_mu_sigma_normal(distribution, n)
-
-        D = ks_sample(distribution, mu_new, sigma_new)
-
-        if D >= d:
-            success += 1
-
-    return success / ITER
-
+from functions import range_sample, rangos, range_normal, range_simulation
 
 
 if __name__ == '__main__':
@@ -49,9 +19,7 @@ if __name__ == '__main__':
 
     # Sample2 es mas chica
     sample_1 = [65.2, 67.1, 69.4, 78.4, 74.0, 80.3]
-    # sample_1.sort()
     sample_2 = [59.4, 72.1, 68.0, 66.2, 58.5]
-    # sample_2.sort()
 
     r = range_sample(sample_1, sample_2)
     print("Rango: {}".format(r))

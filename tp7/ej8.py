@@ -1,8 +1,5 @@
-from functions import stadistic, rejection, normal, estimate_mu_sigma_normal
-from scipy.stats import expon
+from functions import rejection, normal, estimate_mu_sigma_normal
 from scipy.special import ndtr
-from random import random
-from math import exp
 
 
 def ks_sample(sample, mu, sigma):
@@ -37,7 +34,8 @@ if __name__ == '__main__':
     Calcular una aproximación del p-valor.
     """
 
-    sample = [91.9, 97.8, 111.4, 122.3, 105.4, 95.0, 103.8, 99.6, 96.6, 119.3, 104.8, 101.7]
+    sample = [91.9, 97.8, 111.4, 122.3, 105.4, 95.0, 103.8, 99.6, 96.6, 119.3,
+              104.8, 101.7]
     sample.sort()
 
     n = len(sample)

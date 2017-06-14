@@ -1,6 +1,5 @@
-from functions import stadistic, rejection, simulation, sim_ks
-from scipy.special import chdtrc
-from random import random
+from functions import rejection, sim_ks
+
 
 def ks_sample(sample):
     n = len(sample)

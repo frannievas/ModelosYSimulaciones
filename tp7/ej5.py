@@ -1,8 +1,7 @@
-from functions import stadistic, rejection, sim_ks, Ni, binomial, binomial_naive, estimate_p_binomial
-from math import exp
-from random import random
-from scipy.stats import expon
+from functions import stadistic, rejection, Ni, binomial, binomial_naive
+from functions import estimate_p_binomial
 from scipy.special import chdtrc
+
 
 def simulation(n, ITER, T, k, Pi, p):
     """
@@ -26,7 +25,6 @@ def simulation(n, ITER, T, k, Pi, p):
 
         if stadistic(Pi, Ni, n) >= T:
             success += 1
-
 
     return success / ITER
 

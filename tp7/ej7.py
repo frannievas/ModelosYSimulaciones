@@ -1,6 +1,4 @@
-from functions import stadistic, rejection, exponential, estimate_lamda_exponential
-from scipy.stats import expon
-from random import random
+from functions import rejection, exponential, estimate_lamda_exponential
 from math import exp
 
 
@@ -44,7 +42,8 @@ if __name__ == '__main__':
     como una muestra de la población exponencial.
     """
 
-    sample = [1.6, 10.3, 3.5, 13.5, 18.4, 7.7, 24.3, 10.7, 8.4, 4.9, 7.9, 12, 16.2, 6.8, 14.7]
+    sample = [1.6, 10.3, 3.5, 13.5, 18.4, 7.7, 24.3, 10.7, 8.4, 4.9, 7.9, 12,
+              16.2, 6.8, 14.7]
     sample.sort()
 
     n = len(sample)
