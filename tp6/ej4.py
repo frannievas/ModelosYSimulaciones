@@ -1,4 +1,4 @@
-from functions import avg_rec, interval
+from functions import interval, all_interval
 from random import random
 from math import sqrt, factorial
 
@@ -9,35 +9,36 @@ def M():
     """
     U_Old = random()
     U_new = random()
-    n = 1
+    n = 2
     while U_Old <= U_new:
         U_Old = U_new
         U_new = random()
         n += 1
+
     return n
 
 
 def experiment(ITER):
     S2 = 0
-    X = 0
-    Xn = []
+    X = M()
+    Xi = [X]
 
-    for n in range(ITER):
-        Xn.append(M())
-        Xnew = avg_rec(X, n+1, Xn)
-        S2 = (1 - 1 / (n + 1)) * S2 + (n + 2) * (Xnew - X) ** 2
+    for i in range(1, ITER + 1):
+        Xi.append(M())
+        Xnew = X + (Xi[i] - X) / (i + 1)
+        S2 = (1 - 1 / i) * S2 + (i + 1) * (Xnew - X) ** 2
         X = Xnew
-    return S2, X, n
+
+    return S2, X, i
 
 
-# XXX: NO ANDA, PREGUNTAR
 def experiment2(ITER):
-    return sum([1 / factorial(M()) for _ in range(ITER)]) / ITER
+    return sum([1 / factorial(i) for i in range(ITER)])
 
 
 if __name__ == "__main__":
     """
-    Considere una sucesón de números aleatorios y sea M de la siguiente forma:
+    Considere una sucesión de números aleatorios y sea M de la siguiente forma:
     M = {n : U1 ≤ U2 ≤ · · · ≤ Un−1 > Un }
 
     c) Utilizar el resultado del item anterior para estimar e mediante 1000
@@ -51,18 +52,20 @@ if __name__ == "__main__":
     S2, X, n = experiment(ITER)
     print("Media: {}".format(X))
 
-    # X = experiment2(ITER)
-    # print("Media2: {}".format(X))
+    X = experiment2(ITER)
+    print("Media2: {}".format(X))
 
     # d)
-    # XXX: La varianza del estimador en este caso es  S**2 / N
+    # La varianza del estimador en este caso es  S**2 / N
     variance = S2 / n
     print("Varianza del estimador: {}".format(S2))
-    # print("Varianza del estimador: {}".format(variance))
 
     # Intervalo de confianza
     # X(barra) = 1.96 * (S / sqrt(N))
     cons = 1.96
     S = sqrt(S2)
     a, b = interval(X, cons, S, n)
-    print("Intervalo: [{}, {}]".format(a, b))
+    print("Intervalo: [{}, {}] Confianza: 95 %\n".format(a, b))
+
+    print("Todos los intervalos:")
+    all_interval(X, S, n)

@@ -2,6 +2,26 @@ from random import random
 from math import log2, log, sqrt, exp
 
 
+# def general_form():
+#     """
+#     Estimar con la funcion F
+#     """
+#     D = 0.01 ** 2
+#     i = 1
+#     S2 = 0
+#     X = F
+#     Xi = [X]
+#
+#     while S2 / i > D or i < 100:
+#         Xi.append(F)
+#         Xnew = X + (Xi[i] - X) / (i + 1)
+#         S2 = (1 - 1 / i) * S2 + (i + 1) * (Xnew - X) ** 2
+#         X = Xnew
+#         i += 1
+#
+#     return X, i
+#
+#
 def gamma(n, lamda):
     """
     Gamma distribution with parameters n, lambda
@@ -92,12 +112,25 @@ def udiscrete(m, k):
     return int(u*(k-m+1))+m
 
 
+def all_interval(X, S, n):
+    """
+    Calcula los intervalos de confianza para los parametros recibidos
+    """
+    C = [(1.64, 90), (1.96, 95), (2.33, 99)]
+    for c, p in C:
+        a, b = (X - c * (S/sqrt(n)), X + c * (S/sqrt(n)))
+        print("Intervalo: [{}, {}] Confianza: {} %".format(a, b, p))
+
+
 def interval(X, c, S, n):
     """
     Calcula los intervalos de confianza para los parametros recibidos
 
     :param X: Media muestral
-    :param C: Constanste Zalfa
+    :param c: Constante Z_alpha
+     c = 1.64 => 90%
+     c = 1.96 => 95%
+     c = 2.33 => 99%
     :param S: Varianza muestral
     :param n: Largo de la muestra
     """
@@ -136,22 +169,22 @@ def normal_estandar():
             return Y1
 
 
-def avg_sample(Xi):
+def mean_sample(Xi):
     """Calcula el promedio de los Xi"""
     return sum(Xi) / len(Xi)
 
 
-def avg_rec(X, n, Xi):
+def mean_rec(X, n, Xi):
     """
     :param X: Promedio con n-1 valores
     :param n:
     :param Xn: Valor n-esimo
     """
-    return X + (Xi[n-1] - X) / (n + 1)
+    return X + (Xi[n] - X) / (n + 1)
 
 
 def var_sample(Xi):
-    X = avg_sample(Xi)
+    X = mean_sample(Xi)
     result = [(i - X) ** 2 for i in Xi]
     return sum(result) / (len(Xi) - 1)
 
@@ -162,24 +195,26 @@ def var_sample_rec(Xi):
     """
     S2 = 0
     X = Xi[0]
-    for i in range(len(Xi)):
-        Xnew = avg_rec(X, i+1, Xi)
-        S2 = (1 - 1 / (i + 1)) * S2 + (i + 2) * (Xnew - X) ** 2
+    for i in range(1, len(Xi)):
+        Xnew = X + (Xi[i] - X) / (i + 1)
+        Xnew = mean_rec(X, i, Xi)
+        S2 = (1 - 1 / i) * S2 + (i + 1) * (Xnew - X) ** 2
         X = Xnew
     return S2
 
 
 def empiric(x, values):
     """
-    Funcion empirica
-    :param x: valor en el que se desea evaluar la funcion
+    Función empírica
+    :param x: valor en el que se desea evaluar la función
     :param values: valores que toma la funcion empirica
     """
+    values.sort()
     n = len(values)
     if x < values[0]:
         return 0
 
-    for i in range(len(values) - 1):
+    for i in range(n - 1):
         if (x >= values[i]) and (x < values[i+1]):
             return (i+1) / n
 
@@ -191,7 +226,7 @@ def bootstrap(sample, N):
     :variable: mean: Estimación por boostrap de la media.
     :variable: var: Estimación por boostrap de la varianza.
     """
-    empirical_mean = avg_sample(sample)
+    empirical_mean = mean_sample(sample)
     empirical_var = var_sample(sample)
     n, mean, var = len(sample), 0, 0
 

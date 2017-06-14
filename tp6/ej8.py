@@ -1,4 +1,4 @@
-from functions import Poisson, exponential
+from functions import exponential
 
 
 def simulation():
@@ -56,8 +56,9 @@ def simulation():
 
 if __name__ == '__main__':
     """
-    Enunciado: Considerar un sistema con un único servidor en el cual los clientes
-    potenciales llegan de acuerdo con un proceso de Poisson de razón 4.0.
+    Enunciado: Considerar un sistema con un único servidor en el cual los
+    clientes potenciales llegan de acuerdo con un proceso de Poisson de razón
+    4.0.
     Un cliente potencial entrará al sistema sólo si hay tres o menos clientes
     en el sistema al momento de su llegada. El tiempo de servicio de cada
     cliente está distribuído según una exponencial de parámetro 4.2.

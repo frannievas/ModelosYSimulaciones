@@ -1,20 +1,21 @@
-from functions import normal, avg_rec
+from functions import normal
 
 
 def experiment():
     D = 0.1 ** 2
-    n = 0
+    i = 1
     S2 = 0
-    Xn = []
-    X = 0
+    X = normal(0, 1)
+    Xi = [X]
 
-    while S2 / (n+1) > D or n < 100:
-        Xn.append(normal(0, 1))
-        Xnew = avg_rec(X, n+1, Xn)
-        S2 = (1 - 1 / (n + 1)) * S2 + (n + 2) * (Xnew - X) ** 2
+    while S2 / i > D or i < 30:
+        Xi.append(normal(0, 1))
+        Xnew = X + (Xi[i] - X) / (i + 1)
+        S2 = (1 - 1 / i) * S2 + (i + 1) * (Xnew - X) ** 2
         X = Xnew
-        n += 1
-    return S2, X, n
+        i += 1
+
+    return S2, X, i
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-from functions import avg_rec, interval
+from functions import interval
 from random import random
 from math import sqrt
 
@@ -14,19 +14,19 @@ def cae_adentro():
 
 def experiment():
     D = (0.1 / (1.96 * 2)) ** 2
-    n = 0
+    i = 1
     S2 = 0
-    X = 0
-    Xn = []
+    X = cae_adentro()
+    Xi = [X]
 
-    while S2 / (n+1) > D or n < 100:
-        Xn.append(cae_adentro())
-        Xnew = avg_rec(X, n+1, Xn)
-        S2 = (1 - 1 / (n + 1)) * S2 + (n + 2) * (Xnew - X) ** 2
+    while S2 / i > D or i < 100:
+        Xi.append(cae_adentro())
+        Xnew = X + (Xi[i] - X) / (i + 1)
+        S2 = (1 - 1 / i) * S2 + (i + 1) * (Xnew - X) ** 2
         X = Xnew
-        n += 1
-    return S2, X, n
+        i += 1
 
+    return S2, X, i
 
 if __name__ == "__main__":
     """
@@ -43,11 +43,12 @@ if __name__ == "__main__":
     print("Cantidad de iteraciones: {}\n".format(n))
 
     # Dato extra
-    print("Varianza: {}\n".format(S2 * 4))
+    print("Varianza: {}".format(S2))
+    print("Desviación estandar: {}\n".format(sqrt(S2)))
 
     # Intervalo de confianza
     # X(barra) = 1.96 * (S / sqrt(N))
     cons = 1.96
     S = sqrt(S2)
     a, b = interval(X, cons, S, n)
-    print("Intervalo: [{}, {}]".format(4 * a, 4 * b))
+    print("Intervalo: [{}, {}] Confianza 95 %\n".format(4 * a, 4 * b))
