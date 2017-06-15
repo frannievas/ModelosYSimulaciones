@@ -1,7 +1,7 @@
-from functions import rejection, sim_ks
+from functions import rejection, p_value
 
 
-def ks_sample(sample):
+def d_sample(sample):
     n = len(sample)
     D1 = max([((i+1)/n) - sample[i] for i in range(n)])
     D2 = max([sample[i] - (i/n) for i in range(n)])
@@ -18,11 +18,11 @@ if __name__ == '__main__':
     values = [0.12, 0.18, 0.06, 0.33, 0.72, 0.83, 0.36, 0.27, 0.77, 0.74]
     values.sort()
 
-    D = ks_sample(values)
+    D = d_sample(values)
     print("Estadisitico D: {}".format(D))
 
     Iter = 1000
     n = len(values)
-    p_value_simulation = sim_ks(n, Iter, D)
+    p_value_simulation = p_value(n, Iter, D)
     print("P-Valor simulacion: {}".format(p_value_simulation))
     rejection(p_value_simulation)

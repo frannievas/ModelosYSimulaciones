@@ -1,30 +1,6 @@
-from functions import rejection, normal, estimate_mu_sigma_normal
+from functions import rejection, normal, estimate_mu_sigma_normal, d_value_normal, p_value_normal, p_value
 from scipy.special import ndtr
 
-
-def ks_sample(sample, mu, sigma):
-    n = len(sample)
-    D1 = max([((i+1)/n) - ndtr((sample[i] - mu) / sigma) for i in range(n)])
-    D2 = max([ndtr((sample[i] - mu) / sigma) - (i/n) for i in range(n)])
-    return max(D1, D2)
-
-
-def sim_ks(n, ITER, d, mu, sigma):
-    """
-    """
-    success = 0
-
-    for _ in range(ITER):
-        distribution = [normal(mu, sigma) for _ in range(n)]
-        distribution.sort()
-        mu_new, sigma_new = estimate_mu_sigma_normal(distribution, n)
-
-        D = ks_sample(distribution, mu_new, sigma_new)
-
-        if D >= d:
-            success += 1
-
-    return success / ITER
 
 if __name__ == '__main__':
     """
@@ -40,12 +16,15 @@ if __name__ == '__main__':
 
     n = len(sample)
     Iter = 10000
-    mu, sigma = estimate_mu_sigma_normal(sample, n)
+    mu, sigma = estimate_mu_sigma_normal(sample)
 
-    d = ks_sample(sample, mu, sigma)
+    d = d_value_normal(sample, mu, sigma)
     print("Estadisitico: {}".format(d))
 
-    p_value = sim_ks(n, Iter, d, mu, sigma)
-    print("P_Value: {}\n".format(p_value))
+    p_value_1 = p_value(n, Iter, d)
+    print("P_Value (randoms): {}\n".format(p_value_1))
+    rejection(p_value_1)
 
-    rejection(p_value)
+    p_value_2 = p_value_normal(n, Iter, d, mu, sigma)
+    print("P_Value (normal): {}\n".format(p_value_2))
+    rejection(p_value_2)

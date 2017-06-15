@@ -1,4 +1,4 @@
-from functions import range_sample, rangos, range_normal, range_simulation
+from functions import Range, range_small, range_normal, range_simulation
 
 
 if __name__ == '__main__':
@@ -24,13 +24,13 @@ if __name__ == '__main__':
     sample_1 = [19, 31, 39, 45, 47, 66, 75]
     sample_2 = [28, 36, 44, 49, 52, 72, 72]
 
-    r = range_sample(sample_1, sample_2)
+    r = Range(sample_1, sample_2)
     print("Rango: {}".format(r))
 
     n = len(sample_2)
     m = len(sample_1)
 
-    p_value_1 = rangos(n, m, r)
+    p_value_1 = range_small(n, m, r)
     print("a) p-valor exacto")
     print("P_Value: {}\n".format(p_value_1))
     Iter = 10000

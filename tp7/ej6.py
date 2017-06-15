@@ -1,16 +1,5 @@
-from functions import rejection, sim_ks, exponential
+from functions import rejection, p_value, exponential, d_value_exponential
 from math import exp
-
-
-def expAcum(x, lamda):
-    return 1 - exp(-lamda * x)
-
-
-def ks_sample(sample):
-    n = len(sample)
-    D1 = max([((i+1)/n) - expAcum(sample[i], 1) for i in range(n)])
-    D2 = max([expAcum(sample[i], 1) - (i/n) for i in range(n)])
-    return max(D1, D2)
 
 
 if __name__ == '__main__':
@@ -28,12 +17,12 @@ if __name__ == '__main__':
 
     Iter = 10000
 
-    d = ks_sample(values)
+    d = d_value_exponential(values, 1)
 
     print("Estadisitico: {}".format(d))
     n = len(values)
 
-    p_value = sim_ks(n, Iter, d)
+    p_value = p_value(n, Iter, d)
 
     print("P_Value: {}".format(p_value))
     rejection(p_value)

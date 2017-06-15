@@ -1,35 +1,7 @@
-from functions import rejection, exponential, estimate_lamda_exponential
+from functions import rejection, exponential, p_value
+from functions import estimate_lamda_exponential, d_value_exponential, p_value_exponential
 from math import exp
 
-
-def expAcum(x, lamda):
-    return 1 - exp(-lamda * x)
-
-
-def ks_sample(sample, lamda):
-    n = len(sample)
-    D1 = max([((i+1)/n) - expAcum(sample[i], lamda) for i in range(n)])
-    D2 = max([expAcum(sample[i], lamda) - (i/n) for i in range(n)])
-    return max(D1, D2)
-
-
-def sim_ks(n, ITER, d, lamda):
-    """
-    """
-    success = 0
-
-    for _ in range(ITER):
-        distribution = [exponential(lamda) for _ in range(n)]
-        # XXX: BIQUERFUL! HAY QUE ORDENAR
-        distribution.sort()
-        lamda_new = estimate_lamda_exponential(distribution, n)
-
-        D = ks_sample(distribution, lamda_new)
-
-        if D >= d:
-            success += 1
-
-    return success / ITER
 
 if __name__ == '__main__':
     """
@@ -50,10 +22,13 @@ if __name__ == '__main__':
     Iter = 10000
     lamda = estimate_lamda_exponential(sample, n)
 
-    d = ks_sample(sample, lamda)
+    d = d_value_exponential(sample, lamda)
     print("Estadisitico: {}".format(d))
 
-    p_value = sim_ks(n, Iter, d, lamda)
-    print("P_Value: {}\n".format(p_value))
+    p_value_1 = p_value(n, Iter, d)
+    print("P_Value (randoms): {}\n".format(p_value_1))
+    rejection(p_value_1)
 
-    rejection(p_value)
+    p_value_2 = p_value_exponential(n, Iter, d, lamda)
+    print("P_Value (exponential): {}\n".format(p_value_2))
+    rejection(p_value_2)
