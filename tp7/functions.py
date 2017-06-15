@@ -2,6 +2,8 @@ from collections import Counter
 from random import random
 from math import log2, log, sqrt, factorial, exp
 from scipy.special import ndtr
+from scipy.stats import binom
+
 
 """
 ======= 2 MUESTRAS =========
@@ -300,7 +302,8 @@ def binomial(n, p):
 
 
 def binomial_pi(n, p, i):
-    return nCr(n, i) * (p**i) * ((1 - p) ** (n-i))
+  return binom.pmf(i, n, p)
+    # return nCr(n, i) * (p**i) * ((1 - p) ** (n-i))
 
 
 def Ni(sample):
