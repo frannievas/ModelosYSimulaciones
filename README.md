@@ -1,12 +1,12 @@
 # Modelos y Simulaciones
 
-Este repositorio cuenta con la resoluciones de los ejercicios de la materia.
+Este repositorio cuenta con las resoluciones de los ejercicios de la materia.
 
 ## Prerequisitos
 
 Se necesita tener `Python 3` para poder utilizar el código de este repositorio.
 
-## Organizacion
+## Organización
 
 Los archivos llamados `functions.py` recopilan todas las funciones usadas.
 
